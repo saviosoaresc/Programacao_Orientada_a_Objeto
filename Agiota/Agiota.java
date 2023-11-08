@@ -9,6 +9,7 @@ public class Agiota {
     private final ArrayList<Operation> aliveOper; // Operacao viva
     private final ArrayList<Operation> deathOper; // Operacao morta
 
+    //inicializa todas as Lists
     public Agiota() {
         aliveCli = new ArrayList<>();
         aliveOper = new ArrayList<>();
@@ -16,23 +17,31 @@ public class Agiota {
         deathOper = new ArrayList<>();
     }
 
+    //Funcoa que adicona o cliente por meio do nome e do litime dele
     public void addClient(String name, int limite) {
+        //percorre a lista de clientes vivos e se ja existir retorana um erro
         for (int i = 0; i < aliveCli.size(); i++) {
             if (name.equals(aliveCli.get(i).getName())) {
                 System.out.println("fail: cliente ja existe");
                 return;
             }
         }
+        //se sair da lista vivo e nao retorna para a funcao, adiciona o cliente
         aliveCli.add(new Client(name, limite));
     } // ✅✅✅✅✅✅
 
+    //Funcao que dar uma operacao para o nome que eh passado pelo usuario
     public void give(String name, int value) {
+        //percore a list de clientes vivos
         for (int i = 0; i < aliveCli.size(); i++) {
+            //se o nome que passar estiver na list de vivos
             if (name.equals(aliveCli.get(i).getName())) {
+                //se o valor que o user passar somando a balanca dele passar do limite, retorna um erro 
                 if (value + aliveCli.get(i).getBalance() > aliveCli.get(i).getLimite()) {
                     System.out.println("fail: limite excedido");
                     return;
                 } else {
+                    //se nenhum erro acima acontecer, adiciono a operacao na list de clientes vivos e nas operacao vivas
                     Operation opera = new Operation(name, Label.give, value);
                     aliveCli.get(i).getOperations().add(opera);
                     aliveOper.add(opera);
